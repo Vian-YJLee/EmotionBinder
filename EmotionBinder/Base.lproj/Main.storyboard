@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -68,155 +67,13 @@
             </objects>
             <point key="canvasLocation" x="1965.217391304348" y="464.73214285714283"/>
         </scene>
-        <!--Camera View Controller-->
-        <scene sceneID="Qe8-R1-9T6">
-            <objects>
-                <viewController id="648-xl-sKe" customClass="CameraViewController" customModule="DailyMoments" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="nSf-XR-fEP"/>
-                        <viewControllerLayoutGuide type="bottom" id="YYS-XE-Cwy"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Si5-Po-HL0">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hqJ-5F-g32">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="BIw-gO-q7k" appends="YES" id="GbE-MY-GJH"/>
-                                    <outletCollection property="gestureRecognizers" destination="Wzs-eg-iJq" appends="YES" id="yyo-zh-Tco"/>
-                                </connections>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjP-3o-1dz">
-                                <rect key="frame" x="0.0" y="288" width="414" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="shadowOffset" width="1" height="1"/>
-                            </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0K7-Sp-3O6" userLabel="Setting Toolbar">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <barButtonItem systemItem="stop" id="j7h-cJ-XtC" userLabel="Cancel Bar Button Item">
-                                        <connections>
-                                            <action selector="cancelTakePhoto:" destination="648-xl-sKe" id="FsS-zT-ZAt"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="6uy-Ar-DS0"/>
-                                    <barButtonItem image="show_brown" id="Lzq-mu-rWh">
-                                        <connections>
-                                            <action selector="addFunEmoticon:" destination="648-xl-sKe" id="Q7S-Ix-qbk"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Ehu-HS-Swn"/>
-                                    <barButtonItem image="screen_ratio_1_1" id="oWi-9h-AE3" userLabel="Screen Ratio Switch Bar Button Item">
-                                        <connections>
-                                            <action selector="switchScreenRatio:" destination="648-xl-sKe" id="hQF-zF-J7v"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="W1x-Vx-Im3"/>
-                                    <barButtonItem image="flash_off" id="xlc-lH-gUS" userLabel="Flash Switch Bar Button Item">
-                                        <connections>
-                                            <action selector="switchCameraFlash:" destination="648-xl-sKe" id="DAm-CC-4eI"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRh-L6-uJc">
-                                <rect key="frame" x="0.0" y="782" width="414" height="80"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="84q-wk-5ab"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="fuo-xc-Na2"/>
-                                    <barButtonItem image="camera_album" id="aYC-pV-wOH" userLabel="Camera Album Bar Button Item">
-                                        <connections>
-                                            <action selector="pickAnImageFromPhotoLibrary:" destination="648-xl-sKe" id="hkq-Ay-Uzu"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="9Xk-Dd-xOp"/>
-                                    <barButtonItem image="camera_shutter" id="thC-zM-gQL" userLabel="Camera Shutter Bar Button Item">
-                                        <connections>
-                                            <action selector="takePhoto:" destination="648-xl-sKe" id="TVQ-ot-AXb"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="6ie-mN-Kaq"/>
-                                    <barButtonItem image="camera_change" id="gZh-ba-Cb6" userLabel="Camera Change Bar Button Item">
-                                        <connections>
-                                            <action selector="switchCameraPostion:" destination="648-xl-sKe" id="Cul-0f-rI5"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="p2U-jn-l17"/>
-                                </items>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="hqJ-5F-g32" firstAttribute="centerY" secondItem="Si5-Po-HL0" secondAttribute="centerY" id="1Zp-D3-6kP"/>
-                            <constraint firstItem="hqJ-5F-g32" firstAttribute="centerX" secondItem="Si5-Po-HL0" secondAttribute="centerX" id="4CC-d9-5zc"/>
-                            <constraint firstItem="hqJ-5F-g32" firstAttribute="top" secondItem="nSf-XR-fEP" secondAttribute="bottom" id="4k0-1J-1e9"/>
-                            <constraint firstItem="0K7-Sp-3O6" firstAttribute="leading" secondItem="Si5-Po-HL0" secondAttribute="leading" id="7Gb-lf-gxK"/>
-                            <constraint firstItem="hqJ-5F-g32" firstAttribute="leading" secondItem="Si5-Po-HL0" secondAttribute="leading" id="FNI-Co-sz0"/>
-                            <constraint firstAttribute="trailing" secondItem="yRh-L6-uJc" secondAttribute="trailing" id="H2J-eU-O35"/>
-                            <constraint firstAttribute="trailing" secondItem="0K7-Sp-3O6" secondAttribute="trailing" id="Mrb-wd-4RM"/>
-                            <constraint firstItem="YYS-XE-Cwy" firstAttribute="top" secondItem="hqJ-5F-g32" secondAttribute="bottom" id="Oam-O9-2QH"/>
-                            <constraint firstAttribute="trailing" secondItem="yjP-3o-1dz" secondAttribute="trailing" id="Peo-dO-DSh"/>
-                            <constraint firstItem="0K7-Sp-3O6" firstAttribute="top" secondItem="nSf-XR-fEP" secondAttribute="bottom" id="V5t-bW-dDs"/>
-                            <constraint firstItem="yRh-L6-uJc" firstAttribute="leading" secondItem="Si5-Po-HL0" secondAttribute="leading" id="j1p-Fi-thz"/>
-                            <constraint firstItem="YYS-XE-Cwy" firstAttribute="top" secondItem="yRh-L6-uJc" secondAttribute="bottom" id="jmp-T4-QkB"/>
-                            <constraint firstItem="yjP-3o-1dz" firstAttribute="top" secondItem="0K7-Sp-3O6" secondAttribute="bottom" constant="200" id="v94-w2-Pqj"/>
-                            <constraint firstAttribute="trailing" secondItem="hqJ-5F-g32" secondAttribute="trailing" id="wLG-xz-e5J"/>
-                            <constraint firstItem="yjP-3o-1dz" firstAttribute="leading" secondItem="Si5-Po-HL0" secondAttribute="leading" id="wXJ-ay-buR"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="baZ-PJ-yyF"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="z6n-v4-k6j">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="caV-Y6-Gno"/>
-                    </navigationItem>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="addFunEmoticonBarButton" destination="Lzq-mu-rWh" id="cuQ-Ri-E4s"/>
-                        <outlet property="cameraToolbar" destination="yRh-L6-uJc" id="Tu3-oj-8qK"/>
-                        <outlet property="filterNameLabel" destination="yjP-3o-1dz" id="NpW-dV-omV"/>
-                        <outlet property="flashOfCameraBarButtonItem" destination="xlc-lH-gUS" id="CxF-XJ-wSW"/>
-                        <outlet property="photoAlbumBarButton" destination="aYC-pV-wOH" id="ONl-Cv-EkN"/>
-                        <outlet property="previewImageView" destination="hqJ-5F-g32" id="v4d-tm-ieA"/>
-                        <outlet property="screenRatioBarButtonItem" destination="oWi-9h-AE3" id="Doz-KA-wDD"/>
-                        <outlet property="settingToolbar" destination="0K7-Sp-3O6" id="L7h-rp-7ZU"/>
-                        <outlet property="shutterOfCameraBarButtonItem" destination="thC-zM-gQL" id="2dg-2p-mJK"/>
-                        <outlet property="switchOfCameraBarButtonItem" destination="gZh-ba-Cb6" id="83h-oM-MSc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1uW-Aj-fKs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="left" id="BIw-gO-q7k" userLabel="Left Swipe Gesture Recognizer">
-                    <connections>
-                        <action selector="changeCameraEffectWithSwipeGesture:" destination="648-xl-sKe" id="g4p-At-AAO"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="right" id="Wzs-eg-iJq" userLabel="Right Swipe Gesture Recognizer">
-                    <connections>
-                        <action selector="changeCameraEffectWithSwipeGesture:" destination="648-xl-sKe" id="hR4-dr-fZr"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="4057.971014492754" y="16.741071428571427"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="edY-81-Kvp">
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="psh-91-8VT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4zK-mj-C1H">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -279,21 +136,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="648-xl-sKe" kind="relationship" relationship="rootViewController" id="xEg-qb-1yX"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfY-Oj-bFH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3147.826086956522" y="16.741071428571427"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="camera_album" width="16" height="16"/>
-        <image name="camera_change" width="16" height="16"/>
-        <image name="camera_shutter" width="16" height="16"/>
-        <image name="flash_off" width="16" height="16"/>
-        <image name="screen_ratio_1_1" width="16" height="16"/>
-        <image name="show_brown" width="16" height="16"/>
-    </resources>
 </document>
