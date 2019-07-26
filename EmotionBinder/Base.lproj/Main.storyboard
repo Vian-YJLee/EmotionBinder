@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="psh-91-8VT">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,15 +15,15 @@
             <objects>
                 <tableViewController id="QnX-0G-d3c" customClass="NewsFeedTableViewController" customModule="EmotionBinder" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dEz-BN-Ld2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ARO-V2-Zzl">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ARO-V2-Zzl" id="QXy-yz-fWz">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -43,15 +44,15 @@
             <objects>
                 <tableViewController id="p2D-bV-oQI" customClass="SettingTableViewController" customModule="EmotionBinder" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="StS-gg-n1O">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="dCC-7d-1cu">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dCC-7d-1cu" id="z81-uN-Ocd">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -67,10 +68,10 @@
             </objects>
             <point key="canvasLocation" x="1965.217391304348" y="464.73214285714283"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Home Tab Bar Controller-->
         <scene sceneID="edY-81-Kvp">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="psh-91-8VT" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="psh-91-8VT" customClass="HomeTabBarController" customModule="EmotionBinder" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4zK-mj-C1H">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -87,14 +88,14 @@
             </objects>
             <point key="canvasLocation" x="144.92753623188406" y="16.741071428571427"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="jGz-iE-Zy4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="toH-vU-Jvt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Cff-B4-enx"/>
+                    <tabBarItem key="tabBarItem" systemItem="recents" id="Cff-B4-enx"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AZ6-S7-tKb">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -106,14 +107,14 @@
             </objects>
             <point key="canvasLocation" x="1055.072463768116" y="-431.25"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Setting-->
         <scene sceneID="kqD-KY-Fhh">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZUX-IB-LQb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="more" id="cyQ-ko-nqD"/>
+                    <tabBarItem key="tabBarItem" title="Setting" id="cyQ-ko-nqD"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MBC-hp-rML">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -125,21 +126,110 @@
             </objects>
             <point key="canvasLocation" x="1055.072463768116" y="464.73214285714283"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="EpO-vn-8lY">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6Vd-lN-vCT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="qZa-3t-lh4"/>
+                    <tabBarItem key="tabBarItem" systemItem="featured" id="qZa-3t-lh4"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ww7-El-qH6">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Z7a-oa-Xlj" kind="relationship" relationship="rootViewController" id="deG-7N-iv5"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfY-Oj-bFH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3147.826086956522" y="16.741071428571427"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="cpm-jz-sbz">
+            <objects>
+                <viewController id="Z7a-oa-Xlj" customClass="CameraViewController" customModule="EmotionBinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BUM-pu-WlU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ek3-Nx-Hku" userLabel="Filter Title">
+                                <rect key="frame" x="0.0" y="296" width="375" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="FyX-Rg-0SQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="43"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NRk-Zq-Nvl">
+                                <rect key="frame" x="0.0" y="85" width="375" height="642"/>
+                                <viewLayoutGuide key="safeArea" id="99u-16-ikq"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5E-nW-E1k" userLabel="CameraCntr Toolbar">
+                                <rect key="frame" x="0.0" y="649" width="375" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="146-Jg-3kW"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="앨범" id="KVB-fq-pmt" userLabel="Photo Library"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ZOU-Us-B1Q"/>
+                                    <barButtonItem title="눌러" id="TCf-D6-S2y" userLabel="Capture Button"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dmG-X5-Lgl"/>
+                                    <barButtonItem title="카메라회전" id="Vta-P9-Ta7" userLabel="mirroring"/>
+                                </items>
+                            </toolbar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KBP-SA-bP1" userLabel="Setting Toolbar">
+                                <rect key="frame" x="0.0" y="85" width="375" height="44"/>
+                                <viewLayoutGuide key="safeArea" id="ZYa-0q-wY7"/>
+                                <items>
+                                    <barButtonItem title="back" id="aY1-SD-ncC" userLabel="back"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="5ir-L1-c9J"/>
+                                    <barButtonItem title="Fun" id="AgE-cY-6Ds" userLabel="effect"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="CyC-hB-OhZ"/>
+                                    <barButtonItem title="1:1" id="Gs9-eW-FSG" userLabel="propotion"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="31a-Nn-YU6"/>
+                                    <barButtonItem title="Flash" id="uoY-dS-fuj" userLabel="Flash"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ek3-Nx-Hku" firstAttribute="leading" secondItem="KBP-SA-bP1" secondAttribute="leading" id="2XM-xn-JmE"/>
+                            <constraint firstItem="F5E-nW-E1k" firstAttribute="leading" secondItem="lkl-aG-ap0" secondAttribute="leading" id="Acx-30-sdb"/>
+                            <constraint firstItem="F5E-nW-E1k" firstAttribute="top" secondItem="KBP-SA-bP1" secondAttribute="bottom" constant="500" id="CXQ-JE-WBk"/>
+                            <constraint firstItem="Ek3-Nx-Hku" firstAttribute="trailing" secondItem="KBP-SA-bP1" secondAttribute="trailing" id="Dnx-bc-YfP"/>
+                            <constraint firstItem="Ek3-Nx-Hku" firstAttribute="top" secondItem="BUM-pu-WlU" secondAttribute="top" constant="296" id="RRd-aj-gl0"/>
+                            <constraint firstItem="Ek3-Nx-Hku" firstAttribute="trailing" secondItem="F5E-nW-E1k" secondAttribute="trailing" id="a1g-I8-f2z"/>
+                            <constraint firstItem="lkl-aG-ap0" firstAttribute="bottom" secondItem="NRk-Zq-Nvl" secondAttribute="bottom" constant="2" id="amx-iV-zsY"/>
+                            <constraint firstItem="F5E-nW-E1k" firstAttribute="trailing" secondItem="lkl-aG-ap0" secondAttribute="trailing" id="l0s-cC-pzM"/>
+                            <constraint firstItem="NRk-Zq-Nvl" firstAttribute="centerY" secondItem="BUM-pu-WlU" secondAttribute="centerY" id="nyc-Tz-7CD"/>
+                            <constraint firstItem="F5E-nW-E1k" firstAttribute="bottom" secondItem="lkl-aG-ap0" secondAttribute="bottom" id="pCW-gm-rY2"/>
+                            <constraint firstItem="NRk-Zq-Nvl" firstAttribute="centerX" secondItem="BUM-pu-WlU" secondAttribute="centerX" id="rFK-PX-iFe"/>
+                            <constraint firstItem="Ek3-Nx-Hku" firstAttribute="leading" secondItem="F5E-nW-E1k" secondAttribute="leading" id="sL0-5E-YAz"/>
+                            <constraint firstItem="Ek3-Nx-Hku" firstAttribute="leading" secondItem="NRk-Zq-Nvl" secondAttribute="leading" id="uwV-c1-FwN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lkl-aG-ap0"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OA3-sw-sB2"/>
+                    <connections>
+                        <outlet property="cameraPreview" destination="NRk-Zq-Nvl" id="9Vk-bB-g53"/>
+                        <outlet property="cameraSwichBarbuttonItem" destination="Vta-P9-Ta7" id="Kh2-by-0It"/>
+                        <outlet property="cameracntrToolbar" destination="F5E-nW-E1k" id="vu3-ws-nXt"/>
+                        <outlet property="emojiEditorBarButtonItem" destination="AgE-cY-6Ds" id="1fG-aD-B1W"/>
+                        <outlet property="filterTitleLabel" destination="Ek3-Nx-Hku" id="dCU-bC-UjH"/>
+                        <outlet property="flashSetBarbB" destination="uoY-dS-fuj" id="tS2-fU-tke"/>
+                        <outlet property="photoLibraryBarButtonItem" destination="KVB-fq-pmt" id="CIV-BC-GwN"/>
+                        <outlet property="ratioSetBarButtonItem" destination="Gs9-eW-FSG" id="qH0-bD-ZT8"/>
+                        <outlet property="settingToolbar" destination="KBP-SA-bP1" id="moy-ON-Jn0"/>
+                        <outlet property="shutterBarButtonItem" destination="TCf-D6-S2y" id="3LB-NZ-8ju"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cqa-CP-ABE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4183.1999999999998" y="-42.118226600985224"/>
         </scene>
     </scenes>
 </document>

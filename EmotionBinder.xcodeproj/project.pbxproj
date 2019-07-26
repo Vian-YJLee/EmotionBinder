@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		01C570B3EC5D8D70A2278D32 /* Pods_EmotionBinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBB56AB0BD8079854B12EF0 /* Pods_EmotionBinder.framework */; };
+		4C60661B22E6DB5800A913A6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60661A22E6DB5800A913A6 /* CameraViewController.swift */; };
+		4C60661D22E84E4700A913A6 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */; };
 		4CA2693F22A6664B00C143F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2693E22A6664B00C143F2 /* AppDelegate.swift */; };
 		4CA2694622A6664B00C143F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CA2694422A6664B00C143F2 /* Main.storyboard */; };
 		4CA2694822A6664D00C143F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CA2694722A6664D00C143F2 /* Assets.xcassets */; };
@@ -37,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		0F9F4115B39A74BDCB84CD5D /* Pods-EmotionBinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmotionBinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder.debug.xcconfig"; sourceTree = "<group>"; };
+		4C60661A22E6DB5800A913A6 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		4CA2693B22A6664B00C143F2 /* EmotionBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmotionBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA2693E22A6664B00C143F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CA2694522A6664B00C143F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -89,6 +93,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4C60661922E6D93300A913A6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		4CA2693222A6664A00C143F2 = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +125,7 @@
 		4CA2693D22A6664B00C143F2 /* EmotionBinder */ = {
 			isa = PBXGroup;
 			children = (
+				4C60661922E6D93300A913A6 /* Controller */,
 				4CA2697122A6727800C143F2 /* Images */,
 				4CA2697022A6725E00C143F2 /* ViewController */,
 				4CA2693E22A6664B00C143F2 /* AppDelegate.swift */,
@@ -146,8 +158,10 @@
 		4CA2697022A6725E00C143F2 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				4C60661A22E6DB5800A913A6 /* CameraViewController.swift */,
 				4CA2697422A6743A00C143F2 /* NewsFeedTableViewController.swift */,
 				4CA2697622A674A100C143F2 /* SettingTableViewController.swift */,
+				4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -357,8 +371,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CA2697722A674A100C143F2 /* SettingTableViewController.swift in Sources */,
+				4C60661B22E6DB5800A913A6 /* CameraViewController.swift in Sources */,
 				4CA2697522A6743A00C143F2 /* NewsFeedTableViewController.swift in Sources */,
 				4CA2693F22A6664B00C143F2 /* AppDelegate.swift in Sources */,
+				4C60661D22E84E4700A913A6 /* HomeTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
