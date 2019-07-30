@@ -41,6 +41,11 @@
 		0F9F4115B39A74BDCB84CD5D /* Pods-EmotionBinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmotionBinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder.debug.xcconfig"; sourceTree = "<group>"; };
 		4C60661A22E6DB5800A913A6 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
+		4C60662922F0365600A913A6 /* Gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gallery.png; sourceTree = "<group>"; };
+		4C60662A22F0365600A913A6 /* CameraRotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraRotate.png; sourceTree = "<group>"; };
+		4C60662B22F0365600A913A6 /* FlashOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FlashOff.png; sourceTree = "<group>"; };
+		4C60662C22F0365600A913A6 /* Shutter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Shutter.png; sourceTree = "<group>"; };
+		4C60662D22F0365600A913A6 /* FlashOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FlashOn.png; sourceTree = "<group>"; };
 		4CA2693B22A6664B00C143F2 /* EmotionBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmotionBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA2693E22A6664B00C143F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CA2694522A6664B00C143F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -100,6 +105,18 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		4C60662822F0364B00A913A6 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				4C60662922F0365600A913A6 /* Gallery.png */,
+				4C60662A22F0365600A913A6 /* CameraRotate.png */,
+				4C60662C22F0365600A913A6 /* Shutter.png */,
+				4C60662B22F0365600A913A6 /* FlashOff.png */,
+				4C60662D22F0365600A913A6 /* FlashOn.png */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 		4CA2693222A6664A00C143F2 = {
 			isa = PBXGroup;
 			children = (
@@ -125,8 +142,8 @@
 		4CA2693D22A6664B00C143F2 /* EmotionBinder */ = {
 			isa = PBXGroup;
 			children = (
+				4C60662822F0364B00A913A6 /* Image */,
 				4C60661922E6D93300A913A6 /* Controller */,
-				4CA2697122A6727800C143F2 /* Images */,
 				4CA2697022A6725E00C143F2 /* ViewController */,
 				4CA2693E22A6664B00C143F2 /* AppDelegate.swift */,
 				4CA2694422A6664B00C143F2 /* Main.storyboard */,
@@ -164,13 +181,6 @@
 				4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */,
 			);
 			path = ViewController;
-			sourceTree = "<group>";
-		};
-		4CA2697122A6727800C143F2 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Images;
 			sourceTree = "<group>";
 		};
 		654978A55C96E1F0673536E9 /* Pods */ = {

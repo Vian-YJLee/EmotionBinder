@@ -174,11 +174,18 @@
                                     <constraint firstAttribute="height" constant="80" id="146-Jg-3kW"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem title="앨범" id="KVB-fq-pmt" userLabel="Photo Library"/>
+                                    <barButtonItem title="앨범" largeContentSizeImage="second" id="KVB-fq-pmt" userLabel="Photo Library"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ZOU-Us-B1Q"/>
-                                    <barButtonItem title="눌러" id="TCf-D6-S2y" userLabel="Capture Button"/>
+                                    <barButtonItem title="눌러" image="Shutter.png" id="TCf-D6-S2y" userLabel="Capture Button">
+                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="takePhoto:" destination="Z7a-oa-Xlj" id="UAb-Rx-O6R"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dmG-X5-Lgl"/>
-                                    <barButtonItem title="카메라회전" id="Vta-P9-Ta7" userLabel="mirroring"/>
+                                    <barButtonItem title="카메라회전" image="CameraRotate.png" id="Vta-P9-Ta7" userLabel="mirroring">
+                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KBP-SA-bP1" userLabel="Setting Toolbar">
@@ -232,4 +239,9 @@
             <point key="canvasLocation" x="4183.1999999999998" y="-42.118226600985224"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="CameraRotate.png" width="600" height="598"/>
+        <image name="Shutter.png" width="696" height="602"/>
+        <image name="second" width="30" height="30"/>
+    </resources>
 </document>

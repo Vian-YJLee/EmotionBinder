@@ -84,6 +84,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     
         if let session = captureSession {
             
+            session.sessionPreset = AVCaptureSession.Preset.hd1920x1080
+            
+            //참조 https://developer.apple.com/documentation/avfoundation/avcapturesession/preset
+            
             let deviceSession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera, AVCaptureDevice.DeviceType.builtInTelephotoCamera, AVCaptureDevice.DeviceType.builtInDualCamera],  mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
             
             if let session = captureSession {
@@ -99,13 +103,17 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
                                     session.addOutput(sessionOutput)
                                     
                                     previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-                                    previewLayer.videoGravity = AVLayerVideoGravity.resize
+                                    previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill //화면조정방식 변경 resize -> resizeAspectFill
                                     previewLayer.connection?.videoOrientation = .portrait
                                     
                                     cameraView.layer.addSublayer(previewLayer)
                                     
                                     previewLayer.position = CGPoint(x: self.cameraView.frame.width / 2, y: self.cameraView.frame.height / 2)
-                                    previewLayer.bounds = cameraView.frame
+                                    
+                                    previewLayer.frame = cameraView.bounds
+                                    
+                                    let previewLayerHeight = previewLayer.bounds.height
+                                    let cameraViewLayoutHeight = cameraView.bounds.height
                                     
                                     session.stopRunning()
                                 }
@@ -151,6 +159,13 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     
     //카메라 전후방 변경
     
-   
+    @IBAction func takePhoto(_ sender: Any) {
+        
+        let settingForMonitoring = AVCapturePhotoSettings()
+        
+        settingForMonitoring.flashMode = .auto
+        settingForMonitoring.isAutoStillImageStabilizationEnabled = true
+    }
+    
     
 }
