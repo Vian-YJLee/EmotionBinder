@@ -185,6 +185,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dmG-X5-Lgl"/>
                                     <barButtonItem title="카메라회전" image="CameraRotate.png" id="Vta-P9-Ta7" userLabel="mirroring">
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="swichCameraPosition:" destination="Z7a-oa-Xlj" id="O0l-GU-xuv"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>

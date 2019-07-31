@@ -115,6 +115,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
                                     let previewLayerHeight = previewLayer.bounds.height
                                     let cameraViewLayoutHeight = cameraView.bounds.height
                                     
+                                    
+                                    print("PreviewLayoutHeight: \(previewLayerHeight)")
+                                    print("cameraViewLayoutHeght: \(cameraViewLayoutHeight)")
+                                    
                                     session.stopRunning()
                                 }
                             }
@@ -157,7 +161,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
         super.viewDidDisappear(animated)
     }
     
-    //카메라 전후방 변경
+    //캡쳐
     
     @IBAction func takePhoto(_ sender: Any) {
         
@@ -165,7 +169,77 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
         
         settingForMonitoring.flashMode = .auto
         settingForMonitoring.isAutoStillImageStabilizationEnabled = true
+        settingForMonitoring.isHighResolutionPhotoEnabled = false
+        
+        
     }
     
+    @IBAction func swichCameraPosition(_ sender: Any) {
+        
+        if let session = captureSession {
+            // Indicate that some change will be made to the session
+            session.beginConfiguration()
+            
+            // Remove existing input
+            let presentCameraInput: AVCaptureInput = session.inputs.first as! AVCaptureInput
+            session.removeInput(presentCameraInput)
+            
+            // Get new input
+            var newCameraInput:AVCaptureDevice! = nil
+            
+            if let input = presentCameraInput as? AVCaptureDeviceInput {
+                if(input.device.position == .back) {
+                    newCameraInput = cameraSwichingPosition(position: .front)
+                    session.sessionPreset = AVCaptureSession.Preset.hd1920x1080
+                }else if(input.device.position == .front) {
+                    
+                    newCameraInput = cameraSwichingPosition(position: .back)
+                    session.sessionPreset = AVCaptureSession.Preset.hd1920x1080
+                
+                }
+            }
+            
+            //Add input to session
+            
+            var err: NSError?
+            var newVideoInput: AVCaptureDeviceInput!
+            
+            do {
+                newVideoInput = try AVCaptureDeviceInput(device: newCameraInput)
+            }catch let err1 as NSError {
+                err = err1
+                newVideoInput = nil
+            }
+            
+            if(newVideoInput == nil || err != nil) {
+                print("Error creating capture device input: \(err!.localizedDescription)")
+            } else {
+                session.addInput(newVideoInput)
+            }
+            //commit all the configuration changes at once
+            
+            session.commitConfiguration()
+            
+            }
+        }
+    }
     
-}
+    // Find a camera with the specified AVCaptureDevicePosition, returning nil if one is not found
+@available(iOS 10.2, *)
+func cameraSwichingPosition(position: AVCaptureDevice.Position) -> AVCaptureDevice? {
+        
+        let deviceSession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera, AVCaptureDevice.DeviceType.builtInTelephotoCamera, AVCaptureDevice.DeviceType.builtInDualCamera], mediaType: AVMediaType.video, position: .unspecified)
+        
+        for device in (deviceSession.devices) {
+            return device
+        }
+    return nil
+    }
+    
+
+    
+
+
+
+
+
