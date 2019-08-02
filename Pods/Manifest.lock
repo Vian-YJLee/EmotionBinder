@@ -17,6 +17,7 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - naveridlogin-sdk-ios (4.0.12)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -27,6 +28,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.2)
   - FMDB
+  - naveridlogin-sdk-ios
   - RxCocoa (~> 5.0)
   - RxSwift (~> 5.0)
 
@@ -34,6 +36,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - FMDB
+    - naveridlogin-sdk-ios
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -41,10 +44,11 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  naveridlogin-sdk-ios: f894849d1f3454f8a68a57383ba29bd9f0d0257f
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
-PODFILE CHECKSUM: 56280b89eb2ca017ac80c14563b07d03f46e19bc
+PODFILE CHECKSUM: 40b2c20b8a5a4805a22ab3974b21dae55286e87a
 
 COCOAPODS: 1.5.3

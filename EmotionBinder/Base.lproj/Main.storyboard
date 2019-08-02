@@ -195,7 +195,11 @@
                                 <rect key="frame" x="0.0" y="85" width="375" height="44"/>
                                 <viewLayoutGuide key="safeArea" id="ZYa-0q-wY7"/>
                                 <items>
-                                    <barButtonItem title="back" id="aY1-SD-ncC" userLabel="back"/>
+                                    <barButtonItem title="back" id="aY1-SD-ncC" userLabel="back">
+                                        <connections>
+                                            <action selector="cancelCamera:" destination="Z7a-oa-Xlj" id="y0e-HJ-ew5"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="5ir-L1-c9J"/>
                                     <barButtonItem title="Fun" id="AgE-cY-6Ds" userLabel="effect"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="CyC-hB-OhZ"/>

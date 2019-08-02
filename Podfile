@@ -7,5 +7,6 @@ target 'EmotionBinder' do
     pod 'RxCocoa', '~> 5.0'
     pod 'AFNetworking', '~> 3.2'
     pod 'FMDB'
+    pod 'naveridlogin-sdk-ios'
 
 end

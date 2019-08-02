@@ -202,7 +202,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             break;
         }
     }
-    
+    //카메라 취소
+    @IBAction func cancelCamera(_ sender: Any) {
+        
+        dismiss(animated: true, completion: nil)
+    }
     
     
     @IBAction func swichCameraPosition(_ sender: Any) {
@@ -273,14 +277,38 @@ func capturePhoto(_: AVCaptureOutput) {
     
     
 }
-    
+
+//apple developer의 AVCaptureDevice.FlashMode문서를 참조해 extension추가 및 method 구현
+// https://developer.apple.com/documentation/avfoundation/avcapturedevice/flashmode
 
 @available(iOS 10.2, *)
 extension CameraViewController {
     
     enum FlashModeCheck: Int {
-        case off
+        case off = 0
         case on
         case auto
+        //열거형으로 상태 검증..
+    }
+    
+    func getFlashModeConstants(_ mode: Int) -> AVCaptureDevice.FlashMode {
+        // Objective-C 문법..애플 개발자 문서 상세 참조...
+        
+        var valueOfFlashMode: AVCaptureDevice.FlashMode = .off
+        
+        
+        switch mode {
+        case FlashModeCheck.off.rawValue: valueOfFlashMode = .off
+        case FlashModeCheck.auto.rawValue: valueOfFlashMode = .auto
+        case FlashModeCheck.on.rawValue: valueOfFlashMode = .on
+        
+        default:
+            break;
+        }
+        
+        return valueOfFlashMode
     }
 }
+
+
+
