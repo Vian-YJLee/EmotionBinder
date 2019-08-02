@@ -201,7 +201,11 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="CyC-hB-OhZ"/>
                                     <barButtonItem title="1:1" id="Gs9-eW-FSG" userLabel="propotion"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="31a-Nn-YU6"/>
-                                    <barButtonItem title="Flash" id="uoY-dS-fuj" userLabel="Flash"/>
+                                    <barButtonItem title="Flash" id="uoY-dS-fuj" userLabel="Flash">
+                                        <connections>
+                                            <action selector="FlashModeStatus:" destination="Z7a-oa-Xlj" id="q5E-NW-Q6p"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

@@ -43,16 +43,22 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     var filterTitle: String? //필터 이름 지정
     var filterIndex: Int? // 현재 필터를 저장해둘 인덱스 변수. 스와이프 기능으로 동작할 때 사용
     var cameraPosition: AVCaptureDevice.Position?
-    var flashModeStatus: Int = 0 // 플래시 모드(항상끔 켬 등..)의 상태 저장하는 프로퍼티
+    var flashSwitchStatus: Int = 0 // 플래시 모드(항상끔 켬 등..)의 상태 저장하는 프로퍼티
+    //온오프 구분을 위해 extension으로 프로토콜을 추가해 conformance하도록 구성
+    
     var screenRatioStatus: Int = 0 // 화면 비율조정 상태 저장 프로퍼티
     var previewImage: CGRect?
     
-    var captureSession: AVCaptureSession? // AV 장치 데이터 흐름 조정
-    var sessionOutput = AVCapturePhotoOutput()
-    var previewLayer = AVCaptureVideoPreviewLayer()
-    var cameraView: UIView!
+      //developer.apple.com의 AVFoundation 문서 참조
     
-    //developer.apple.com의 AVFoundation 문서 참조
+    var captureSession: AVCaptureSession?
+    // 비디오 장치로부터 데이터 출력의 흐름 조정하는 AVCaptureSession 객체
+    var sessionOutput = AVCapturePhotoOutput()
+    // 스틸 이미지(사진)와 관련해 최신 캡쳐 인터페이스 워크 플로우를 제공하는 AVCaptureOutput의 하위클래스. 카메라 화질, 저장방식, Flash 사용 유무 여부 등을 제어함
+    var previewLayer = AVCaptureVideoPreviewLayer() // CALayer의 서브클래스. 입력장치로부터 캡쳐된 비디오를 표시하는데 사용
+    var captureSetting = AVCapturePhotoSettings()
+    //이미지 촬영(캡쳐)시 사용될 동작(플래시 발광 등)과 사진 저장에 필요한 각종 이미지 데이터(저장할 이미지 해상도, 화질 등등) 셋팅값들을 제어하는 클래스
+    var cameraView: UIView!
     
     var protection: String?
     
@@ -69,9 +75,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     
     
     override func viewDidLoad() {
-        
 
         super.viewDidLoad()
+        
+        
 
         // Do any additional setup after loading the view.
     }
@@ -89,6 +96,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             //참조 https://developer.apple.com/documentation/avfoundation/avcapturesession/preset
             
             let deviceSession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera, AVCaptureDevice.DeviceType.builtInTelephotoCamera, AVCaptureDevice.DeviceType.builtInDualCamera],  mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
+            
+            // AVCaptureDevice.DeviceType.builtInDualCamera 는 iOS 10.2 이상에서만 작동.
+            // @avilable 붙여 구동 전 기기 확인
             
             if let session = captureSession {
                 for discoveredDevice in (deviceSession.devices) {
@@ -174,6 +184,27 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
         
     }
     
+    @IBAction func flashModeStatus(_ sender: Any) {
+        //좀 더 확실한 이름 구분이 필요할 것 같은데
+        flashSwitchStatus += 1
+        flashSwitchStatus %= 3
+        // off 상태 값을 0으로 설정 1은 on, 나머지 연산으로 2가 나왔을 경우 자동모드
+        
+        switch flashSwitchStatus {
+        case FlashModeCheck.off.rawValue:
+            flashSetBarbButtonItem.image = UIImage(named: "FlashOff.png")
+        
+        case FlashModeCheck.on.rawValue: flashSetBarbButtonItem.image = UIImage(named: "FlashOn.png")
+        
+        case FlashModeCheck.auto.rawValue: flashSetBarbButtonItem.image = UIImage(named: "FlashAuto.png")
+            
+        default:
+            break;
+        }
+    }
+    
+    
+    
     @IBAction func swichCameraPosition(_ sender: Any) {
         
         if let session = captureSession {
@@ -187,6 +218,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             // Get new input
             var newCameraInput:AVCaptureDevice! = nil
             
+            //사이즈 설정 참조 https://developer.apple.com/documentation/avfoundation/avcapturesession/preset
+
             if let input = presentCameraInput as? AVCaptureDeviceInput {
                 if(input.device.position == .back) {
                     newCameraInput = cameraSwichingPosition(position: .front)
@@ -235,11 +268,19 @@ func cameraSwichingPosition(position: AVCaptureDevice.Position) -> AVCaptureDevi
         }
     return nil
     }
+
+func capturePhoto(_: AVCaptureOutput) {
+    
+    
+}
     
 
+@available(iOS 10.2, *)
+extension CameraViewController {
     
-
-
-
-
-
+    enum FlashModeCheck: Int {
+        case off
+        case on
+        case auto
+    }
+}
