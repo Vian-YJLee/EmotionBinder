@@ -273,10 +273,33 @@ func cameraSwichingPosition(position: AVCaptureDevice.Position) -> AVCaptureDevi
     return nil
     }
 
-func capturePhoto(_: AVCaptureOutput) {
+func photoOutput(_: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer PhotoSampleBuffer: CMSampleBuffer?, previewPhtoSampleBuffer: CMSampleBuffer?, resolvedsettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCapturePhotoBracketSettings?, error: Error?) {
+    
+    if let photoSampleBuffer = PhotoSampleBuffer {
+        let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: PhotoSampleBuffer!, previewPhotoSampleBuffer: previewPhtoSampleBuffer)
+        let takedPhotoImage = UIImage(data: photoData!)
+     
+       
+        if let image = takedPhotoImage {
+            UIImageWriteToSavedPhotosAlbum(image, Any?.self, #selector(saveCompleted), nil)
+        } */
+    }
     
     
 }
+
+func saveCompleted(_ image: UIImage, didFinishSaveingWithError error: Error?, contextInfo: UnsafeMutableRawPointer) {
+    dump(image)
+    
+    let resizedImage = image.resizeImage(targetSize: CGSize(width: 64, height: 64))
+    
+    lf let editPhotoViewController = storyboard?.instantiataViewContreoller(withIdentifier: storiboardIdentifierConstantOfeditPhotoViewController) as? EditPhotoViewController {
+        
+        editPhotoViewController.takenPhotoImge = image
+        
+    }
+}
+
 
 //apple developer의 AVCaptureDevice.FlashMode문서를 참조해 extension추가 및 method 구현
 // https://developer.apple.com/documentation/avfoundation/avcapturedevice/flashmode
