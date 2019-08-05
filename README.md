@@ -24,9 +24,11 @@
 2. 기술
    
    -Swift 4.2를 기본으로 작성합니다.
-   -FMDB를 사용해 DB로 저장된 사진과 글, 필터 등을 관리
+   -FMDB를 사용해 DB로 저장된 사진과 글, 필터 등을 관리. 효율성 제고의 목적
    -AFNetworking Framework로 네이버, 구글, 인스타그램, 페이스북 등의 로그인 API를 이용해 사용자 데이터를 관리
     (최근 WWDC2019에서 외부 API를 이용한 로그인에 iCloud 가 있어야 앱 검수를 통과할 수 있다는 이야기를 들어 알아보는 중입니다)
    - MobileCoreServices Framework 가 아닌 다른 방식으로 커스텀 카메라뷰를 구성
+   - 스와이프 필터 전환은 UIImageWriteTosavedPhotosAlbum으로 구현한 예시를 참조 (developer.apple.com 참조)
+   
    
    //작성중..
