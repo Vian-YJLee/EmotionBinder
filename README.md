@@ -33,7 +33,9 @@
    
    
    //작성중..
-Catalina(MacOS 10.15) Beta 업데이트 이후 Xcode(현재 10.3 ver.)로 작성한 기존 프로젝트들이 열리지 않아 해결방법을 찾는 중..
+(2019.08.07) Catalina(MacOS 10.15) Beta 업데이트 이후 Xcode(현재 10.3 ver.)로 작성한 기존 프로젝트들이 열리지 않아 해결방법을 찾는 중..
 - stackoverflow에서 동일 증상이 있는 유저의 사례를 찾아 그대로 실행하였으나 실패. 다른 방법 찾는 중
 
 참조: https://stackoverflow.com/questions/57019534/i-cant-open-xcode-project-after-updating-to-catalina
+
+(2019.08.08)
