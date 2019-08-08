@@ -38,4 +38,6 @@
 
 참조: https://stackoverflow.com/questions/57019534/i-cant-open-xcode-project-after-updating-to-catalina
 
-(2019.08.08)
+(2019.08.08) 직접적인 해결방법이 apple developer forums와 stackoverflow에서 찾은 정보들을 조합해 우회적인 방법으로 프로젝트 재개.
+근본적인 해결방법은 아니라 catalina의 DB6 업데이트를 기다리는 수 밖에.
+
