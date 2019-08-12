@@ -24,9 +24,20 @@
 2. 기술
    
    -Swift 4.2를 기본으로 작성합니다.
-   -FMDB를 사용해 DB로 저장된 사진과 글, 필터 등을 관리
+   -FMDB를 사용해 DB로 저장된 사진과 글, 필터 등을 관리. 효율성 제고의 목적
    -AFNetworking Framework로 네이버, 구글, 인스타그램, 페이스북 등의 로그인 API를 이용해 사용자 데이터를 관리
     (최근 WWDC2019에서 외부 API를 이용한 로그인에 iCloud 가 있어야 앱 검수를 통과할 수 있다는 이야기를 들어 알아보는 중입니다)
    - MobileCoreServices Framework 가 아닌 다른 방식으로 커스텀 카메라뷰를 구성
+   - 스와이프 필터 전환은 UIImageWriteTosavedPhotosAlbum으로 구현한 예시를 참조 (developer.apple.com 참조)
+   
+   
    
    //작성중..
+(2019.08.07) Catalina(MacOS 10.15) Beta 업데이트 이후 Xcode(현재 10.3 ver.)로 작성한 기존 프로젝트들이 열리지 않아 해결방법을 찾는 중..
+- stackoverflow에서 동일 증상이 있는 유저의 사례를 찾아 그대로 실행하였으나 실패. 다른 방법 찾는 중
+
+참조: https://stackoverflow.com/questions/57019534/i-cant-open-xcode-project-after-updating-to-catalina
+
+(2019.08.08) 직접적인 해결방법이 apple developer forums와 stackoverflow에서 찾은 정보들을 조합해 우회적인 방법으로 프로젝트 재개.
+근본적인 해결방법은 아니라 catalina의 DB6 업데이트를 기다리는 수 밖에.
+
