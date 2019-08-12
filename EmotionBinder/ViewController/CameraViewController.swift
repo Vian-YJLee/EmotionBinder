@@ -282,7 +282,7 @@ func photoOutput(_: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer P
        
         if let image = takedPhotoImage {
             UIImageWriteToSavedPhotosAlbum(image, Any?.self, #selector(saveCompleted), nil)
-        } */
+        }
     }
     
     
@@ -291,9 +291,9 @@ func photoOutput(_: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer P
 func saveCompleted(_ image: UIImage, didFinishSaveingWithError error: Error?, contextInfo: UnsafeMutableRawPointer) {
     dump(image)
     
-    let resizedImage = image.resizeImage(targetSize: CGSize(width: 64, height: 64))
+    let resizedImage = image.resizableImage(targetSize: CGSize(width: 64, height: 64))
     
-    lf let editPhotoViewController = storyboard?.instantiataViewContreoller(withIdentifier: storiboardIdentifierConstantOfeditPhotoViewController) as? EditPhotoViewController {
+    if let editPhotoViewController = UIStoryboard?.instantiataViewContreoller(withIdentifier: storyboardIdentifierConstantOfeditPhotoViewController) as? EditPhotoViewController {
         
         editPhotoViewController.takenPhotoImge = image
         
