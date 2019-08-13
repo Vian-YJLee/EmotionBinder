@@ -19,9 +19,9 @@ class EditPhotoViewController: UIViewController {
         
         static func RowNumbers(of select: Int) -> Int {
             
-            return 0 //임시 반환
-            // return rowTitles[Section]?.count ?? 0
-            // syntax 주석처리
+            
+            return rowTitles[Section]?.count ?? 0
+            
         }
         
         static func titleForIndexPath(_ indexPath: IndexPath) -> String? {
@@ -85,9 +85,11 @@ class EditPhotoViewController: UIViewController {
 
 
 extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("numberOfItemInSection")
+        
         return PhotoEditorTypes.RowNumbers(of: section)
     }
     
@@ -100,6 +102,27 @@ extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewD
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         print("numberOfSections")
+        
         return PhotoEditorTypes.titles.count
     }
+    
+    //filter cell 선택시 호출 되는 메소드
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if let selectedCell = UICollectionViewCell.cellForItem(at: indexPath) as? FilterCollectionViewCell { selectedCell.isSelected =  true}
+        
+        //선택 셀 정렬(수평 중간)메소드
+        self.imagefilterCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    
+    //cell 선택 해제시 호출
+    
+    private func collectionView(_ collectionView: UICollectionViewCell, didDeselectItemAt indexPath: IndexPath) {
+        
+        if let deselectedCell = collectionViewCell.cellForItem(at: indexPath) as? FilterCollectionViewCell {
+            deselectedCell.isSelected = false
+        }
+    }
+    
 }
