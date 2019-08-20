@@ -13,6 +13,8 @@ import Dispatch
 @available(iOS 10.2, *)
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    let storyboardIdentifierConstantOfEditPhotoViewController: String = "showEditPhotoViewController"
+    
     
     @IBOutlet weak var filterTitleLabel: UILabel!
     
@@ -72,15 +74,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
         return isHidden
     }
     
-    
-    
     override func viewDidLoad() {
 
         super.viewDidLoad()
         
-        
-
-        // Do any additional setup after loading the view.
     }
     
     //MAKR: - View Controller Life Cycle
@@ -202,7 +199,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             break;
         }
     }
-    //카메라 취소
+    //카메라 취소 (모달뷰 다운)
     @IBAction func cancelCamera(_ sender: Any) {
         
         dismiss(animated: true, completion: nil)
@@ -222,7 +219,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             // Get new input
             var newCameraInput:AVCaptureDevice! = nil
             
-            //사이즈 설정 참조 https://developer.apple.com/documentation/avfoundation/avcapturesession/preset
+            //이미지 사이즈 설정 참조 https://developer.apple.com/documentation/avfoundation/avcapturesession/preset
 
             if let input = presentCameraInput as? AVCaptureDeviceInput {
                 if(input.device.position == .back) {
@@ -296,8 +293,12 @@ func saveCompleted(_ image: UIImage, didFinishSaveingWithError error: Error?, co
     if let editPhotoViewController = UIStoryboard?.instantiataViewContreoller(withIdentifier: storyboardIdentifierConstantOfeditPhotoViewController) as? EditPhotoViewController {
         
         editPhotoViewController.takenPhotoImge = image
+        editPhotoViewController.takenResizedPhotoImage = resizedImage
         
+        UINavigationController?.pushViewController(editPhotoViewController, animated: false)
     }
+        
+    
 }
 
 
