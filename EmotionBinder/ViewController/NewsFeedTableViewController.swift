@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Photos
 
 class NewsFeedTableViewController: UITableViewController {
 
+    var authorizationStatus: PHAuthorizationStatus? // 사진 접근 권한 상태를 기억해 놓을 프로퍼티
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -21,6 +25,52 @@ class NewsFeedTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear in NewsFeedTableViewController")
+        
+        PHPhotoLibrary.authorizationStatus()
+        
+        authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        if let photoAuthorization = authorizationStatus {
+            
+            switch photoAuthorization {
+            case .authorized:
+                print("photoAuthorization")
+            case .denied:
+                print("photoAuthorization")
+            case .notDetermined:
+                print("photoAuthorization")
+                PHPhotoLibrary.requestAuthorization({(authorizationStatus) in print(authorizationStatus.rawValue)})
+                
+            case .restricted:
+                print(photoAuthorization)
+            
+            }
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        print("viewDidAppear in NewsFeedTableViewController")
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        super.viewWillDisappear(animated)
+        print("viewWillDisappear in NewsFeedTableViewController")
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        
+        super.viewDidDisappear(animated)
+        print("viewDidDisappear in NewsFeedTableViewController")
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

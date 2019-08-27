@@ -12,6 +12,10 @@ class HomeTabBarController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.delegate = self
+        
+        // permission check (Camera, Photo)
+        // self.permissionCheck()
 
         // Do any additional setup after loading the view.
     }

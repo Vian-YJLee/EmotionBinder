@@ -10,6 +10,7 @@
 		01C570B3EC5D8D70A2278D32 /* Pods_EmotionBinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBB56AB0BD8079854B12EF0 /* Pods_EmotionBinder.framework */; };
 		4C3AD2B2230B911A0052C177 /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3AD2B1230B911A0052C177 /* FilterCollectionViewCell.swift */; };
 		4C3AD2B4230BE5300052C177 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3AD2B3230BE5300052C177 /* ImageExtension.swift */; };
+		4C3AD2B6230FA5430052C177 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3AD2B5230FA5430052C177 /* Constants.swift */; };
 		4C60661B22E6DB5800A913A6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60661A22E6DB5800A913A6 /* CameraViewController.swift */; };
 		4C60661D22E84E4700A913A6 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */; };
 		4C60662F22F2C5C300A913A6 /* FlashAuto.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C60662E22F2C5C300A913A6 /* FlashAuto.png */; };
@@ -45,6 +46,7 @@
 		0F9F4115B39A74BDCB84CD5D /* Pods-EmotionBinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmotionBinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder.debug.xcconfig"; sourceTree = "<group>"; };
 		4C3AD2B1230B911A0052C177 /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C3AD2B3230BE5300052C177 /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
+		4C3AD2B5230FA5430052C177 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4C60661A22E6DB5800A913A6 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		4C60662922F0365600A913A6 /* Gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gallery.png; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				4CA2694722A6664D00C143F2 /* Assets.xcassets */,
 				4CA2694922A6664D00C143F2 /* LaunchScreen.storyboard */,
 				4CA2694C22A6664D00C143F2 /* Info.plist */,
+				4C3AD2B5230FA5430052C177 /* Constants.swift */,
 			);
 			path = EmotionBinder;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				4C60661D22E84E4700A913A6 /* HomeTabBarController.swift in Sources */,
 				4C3AD2B2230B911A0052C177 /* FilterCollectionViewCell.swift in Sources */,
 				4C3AD2B4230BE5300052C177 /* ImageExtension.swift in Sources */,
+				4C3AD2B6230FA5430052C177 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -49,24 +49,27 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     //온오프 구분을 위해 extension으로 프로토콜을 추가해 conformance하도록 구성
     
     var screenRatioStatus: Int = 0 // 화면 비율조정 상태 저장 프로퍼티
+    var authorizationStatus: AVAuthorizationStatus? // 카메라 실행 전 권한 묻기 : 개발 가이드 강제사항..안하면 리젝
     var previewImage: CGRect?
     
-      //developer.apple.com의 AVFoundation 문서 참조
     
     var captureSession: AVCaptureSession?
     // 비디오 장치로부터 데이터 출력의 흐름 조정하는 AVCaptureSession 객체
     var sessionOutput = AVCapturePhotoOutput()
     // 스틸 이미지(사진)와 관련해 최신 캡쳐 인터페이스 워크 플로우를 제공하는 AVCaptureOutput의 하위클래스. 카메라 화질, 저장방식, Flash 사용 유무 여부 등을 제어함
     var previewLayer = AVCaptureVideoPreviewLayer() // CALayer의 서브클래스. 입력장치로부터 캡쳐된 비디오를 표시하는데 사용
+    //developer.apple.com의 AVFoundation 문서 참조
     var captureSetting = AVCapturePhotoSettings()
     //이미지 촬영(캡쳐)시 사용될 동작(플래시 발광 등)과 사진 저장에 필요한 각종 이미지 데이터(저장할 이미지 해상도, 화질 등등) 셋팅값들을 제어하는 클래스
+    
+ 
     var cameraView: UIView!
     
     var protection: String?
     
     //상태 바 숨김
     var isHidden: Bool = true{
-        didSet{
+        didSet {
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
@@ -78,107 +81,123 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
 
         super.viewDidLoad()
         
+        flashSwitchStatus = FlashModeCheck.off.rawValue // Init
+        
+        
+        
     }
     
     //MAKR: - View Controller Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        /*
         captureSession = AVCaptureSession()
+        
+         var sessionOutput = AVCapturePhotoOutput()
+         // 스틸 이미지(사진)와 관련해 최신 캡쳐 인터페이스 워크 플로우를 제공하는 AVCaptureOutput의 하위클래스. 카메라 화질, 저장방식, Flash 사용 유무 여부 등을 제어함
+         var previewLayer = AVCaptureVideoPreviewLayer() // CALayer의 서브클래스. 입력장치로부터 캡쳐된 비디오를 표시하는데 사용
+         
     
-        if let session = captureSession {
-            
-            session.sessionPreset = AVCaptureSession.Preset.hd1920x1080
-            
-            //참조 https://developer.apple.com/documentation/avfoundation/avcapturesession/preset
-            
-            let deviceSession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera, AVCaptureDevice.DeviceType.builtInTelephotoCamera, AVCaptureDevice.DeviceType.builtInDualCamera],  mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
-            
-            // AVCaptureDevice.DeviceType.builtInDualCamera 는 iOS 10.2 이상에서만 작동.
-            // @avilable 붙여 구동 전 기기 확인
-            
-            if let session = captureSession {
-                for discoveredDevice in (deviceSession.devices) {
+       
+                    */
+        print("viewWillAppear in CameraViewController")
+        
+        let availavleCameraHardware:Bool = UIImagePickerController.isSourceTypeAvailable(.camera)
+        shutterBarButtonItem.isEnabled = availavleCameraHardware
+        authorizationStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
+        if let authorizationStatusOfCamera = authorizationStatus, availavleCameraHardware {
+            switch authorizationStatusOfCamera {
+            case .authorized:
+                print(authorizationStatusOfCamera)
+                setUpCamera()
+                
+            case .denied:
+                print(authorizationStatusOfCamera)
+                showNotice(alertCase: .Camera) // 접근 권한이 없으므로 사용자에게 설정 - 앱 - 카메라 허가 요청 UIAlertController 호출
+                
+                disableCameraOptionButton() // flash, camera rotate swich 버튼 비활성화
+                
+            case .notDetermined:
+                print(authorizationStatusOfCamera)
+                AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted: Bool) in
                     
-                    if discoveredDevice.position == AVCaptureDevice.Position.back {
-                        do {
-                            let input = try AVCaptureDeviceInput(device: discoveredDevice)
-                            if session.canAddInput(input){
-                                session.addInput(input)
+                    if granted {
+                        
+                        // GCD
+                        DispatchQueue.main.async {
+                            self.setUpCamera() // 카메라 셋업
+                        }
+                        
+                    } else {
+                        print(granted)
+                        
+                        //GCD
+                        DispatchQueue.main.async {
+                            self.disableCameraOptionButton()
                             
-                                if session.canAddOutput(sessionOutput){
-                                    session.addOutput(sessionOutput)
-                                    
-                                    previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-                                    previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill //화면조정방식 변경 resize -> resizeAspectFill
-                                    previewLayer.connection?.videoOrientation = .portrait
-                                    
-                                    cameraView.layer.addSublayer(previewLayer)
-                                    
-                                    previewLayer.position = CGPoint(x: self.cameraView.frame.width / 2, y: self.cameraView.frame.height / 2)
-                                    
-                                    previewLayer.frame = cameraView.bounds
-                                    
-                                    let previewLayerHeight = previewLayer.bounds.height
-                                    let cameraViewLayoutHeight = cameraView.bounds.height
-                                    
-                                    
-                                    print("PreviewLayoutHeight: \(previewLayerHeight)")
-                                    print("cameraViewLayoutHeght: \(cameraViewLayoutHeight)")
-                                    
-                                    session.stopRunning()
-                                }
-                            }
-                        } catch let avCaptureError {
-                            print(avCaptureError)
                         }
                     }
-                } //기기 상태 확인 끝
-            
-          /*  if #available(iOS 10.2, *) {
-                let devicesession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera, AVCaptureDevice.DeviceType.builtInTelephotoCamera, AVCaptureDevice.DeviceType.builtInDualCamera],  mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
-            } else {
-                // Fallback on earlier versions
+                    
+                })
+                
+            case .restricted:
+                print(authorizationStatusOfCamera)
             }
-        } */
-            }
- 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
         }
     }
-    
+        
+                
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        print("viewDidApper in CameraViewController")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print("vidwWillDisappear in CameraViewContoller")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        print("viewDidDisappear in CameraViewController")
     }
     
     //캡쳐
     
     @IBAction func takePhoto(_ sender: Any) {
+        authorizationStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         
-        let settingForMonitoring = AVCapturePhotoSettings()
-        
-        settingForMonitoring.flashMode = .auto
-        settingForMonitoring.isAutoStillImageStabilizationEnabled = true
-        settingForMonitoring.isHighResolutionPhotoEnabled = false
-        
-        
+        if let authorizationStatusOfCamera = authorizationStatus {
+            
+            switch authorizationStatusOfCamera {
+            case .authorized:
+                print(authorizationStatusOfCamera)
+                
+                captureSetting = AVCapturePhotoSettings()
+                
+                DispatchQueue.main.async {
+                    if let photoCaptureSetting = self.captureSetting, let capturePhotoOutput = self.sessionOutput {
+                        
+                        photoCaptureSetting.flashMode = self.getFlashModeConstants(self.flashSwitchStatus)
+                        photoCaptureSetting.isAutoStillImageStabilaizationEnabled = true
+                        photoCaptureSetting.isHighResolutionPhotoEnabled = false
+                        
+                        capturePhotoOutput.capturePhoto(with: photoCaptureSetting, delegate: self)
+                    }
+                }
+                
+            case .denied:
+                print(authorizationStatusOfCamera)
+                showNotice(alertCase: .Camera)
+                
+            default:
+                return
+            }
+        }
     }
     
     @IBAction func flashModeStatus(_ sender: Any) {
@@ -199,6 +218,23 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             break;
         }
     }
+    
+    @IBAction func switchCameraEffect(_ sender: Any) {
+        
+        if let swipeGesture = sender as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            
+            case UISwipeGestureRecognizer.Direction.left:
+                print("Left Swipe")
+            case UISwipeGestureRecognizer.Direction.right:
+                print("Right Swipe")
+        
+            default:
+                return
+            }
+    }
+}
+    
     //카메라 취소 (모달뷰 다운)
     @IBAction func cancelCamera(_ sender: Any) {
         
@@ -256,83 +292,123 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             
             }
         }
+    
+    func disableCameraOptionButton() {
+        cameraSwichBarbuttonItem.isEnabled = false
+        flashSetBarbButtonItem.isEnabled = false
     }
     
+    
+    func setup
+    
     // Find a camera with the specified AVCaptureDevicePosition, returning nil if one is not found
-@available(iOS 10.2, *)
-func cameraSwichingPosition(position: AVCaptureDevice.Position) -> AVCaptureDevice? {
+    @available(iOS 10.2, *)
+    func cameraSwichingPosition(position: AVCaptureDevice.Position) -> AVCaptureDevice? {
         
         let deviceSession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera, AVCaptureDevice.DeviceType.builtInTelephotoCamera, AVCaptureDevice.DeviceType.builtInDualCamera], mediaType: AVMediaType.video, position: .unspecified)
         
         for device in (deviceSession.devices) {
-            return device
+            
+            if device.position == position {
+                return device
+            }
+            return nil
         }
-    return nil
-    }
-
-func photoOutput(_: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer PhotoSampleBuffer: CMSampleBuffer?, previewPhtoSampleBuffer: CMSampleBuffer?, resolvedsettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCapturePhotoBracketSettings?, error: Error?) {
+        
+        // AVCapturePhotoCaptureDelegate Method for Image Saving
+        
+        func photoOutput(_: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer PhotoSampleBuffer: CMSampleBuffer?, previewPhtoSampleBuffer: CMSampleBuffer?, resolvedsettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCapturePhotoBracketSettings?, error: Error?) {
+            
+            if let photoSampleBuffer = PhotoSampleBuffer {
+                let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: PhotoSampleBuffer!, previewPhotoSampleBuffer: previewPhtoSampleBuffer)
+                let takedPhotoImage = UIImage(data: photoData!)
+                
+                
+                if let image = takedPhotoImage {
+                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                }
+            }
+            
+            
+        }
+        
+        
+        func saveCompleted(_ image: UIImage, didFinishSaveingWithError error: Error?, contextInfo: UnsafeMutableRawPointer) {
+            dump(image)
+            
+            navigateToFilterViewControllerWithResizeImage(source: image)
+        }
+        
+        func navigateToFilterViewControllerWithResizeImage(Source image: UIImage) {
+            let resizeImage = image.resizeImage(targetSize: CGSize(width: 64, height: 64))
+            
+            if let editPhotoViewController = storyboard?.instantiateInitialViewController(withIdentifier: storyboardIdentifierConstantOfEditPhotoViewController) as? EditPhotoViewController {
+                
+                editPhotoViewController.takenPhotoImge = image
+                editPhotoViewController.takenResizedPhotoImage = resizeImage
+                
+                UINavigationController?.pushViewController(editPhotoViewController, animated: false)
+            }
+        }
+        
+        func showNotice(alertCase : settingType) {
+            
+            let alertController = UIAlertController(title: AlertContentConstants.titles[alertCase.rawValue], message: AlertContentConstants.message[alertCase.rawValue], preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: AlertContentConstants.setting, style: .default, handler: { (action: UIAlertAction) -> Void in
+                let settingUrl = URL(string: UIApplication.openSettingsURLString)
+                if #available(iOS 10.2, *) {
+                    UIApplication.shared.open(settingUrl!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(settingUrl!)
+                }
+            }))
+            
+            alertController.addAction(UIAlertAction(title: AlertContentConstants.cancel, style: .cancel, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+            
+        }
     
-    if let photoSampleBuffer = PhotoSampleBuffer {
-        let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: PhotoSampleBuffer!, previewPhotoSampleBuffer: previewPhtoSampleBuffer)
-        let takedPhotoImage = UIImage(data: photoData!)
-     
        
-        if let image = takedPhotoImage {
-            UIImageWriteToSavedPhotosAlbum(image, Any?.self, #selector(saveCompleted), nil)
-        }
+        
+        
     }
-    
-    
 }
-
-func saveCompleted(_ image: UIImage, didFinishSaveingWithError error: Error?, contextInfo: UnsafeMutableRawPointer) {
-    dump(image)
+    //apple developer의 AVCaptureDevice.FlashMode문서를 참조해 extension추가 및 method 구현
+    // https://developer.apple.com/documentation/avfoundation/avcapturedevice/flashmode
     
-    let resizedImage = image.resizableImage(targetSize: CGSize(width: 64, height: 64))
     
-    if let editPhotoViewController = UIStoryboard?.instantiataViewContreoller(withIdentifier: storyboardIdentifierConstantOfeditPhotoViewController) as? EditPhotoViewController {
-        
-        editPhotoViewController.takenPhotoImge = image
-        editPhotoViewController.takenResizedPhotoImage = resizedImage
-        
-        UINavigationController?.pushViewController(editPhotoViewController, animated: false)
-    }
-        
-    
-}
-
-
-//apple developer의 AVCaptureDevice.FlashMode문서를 참조해 extension추가 및 method 구현
-// https://developer.apple.com/documentation/avfoundation/avcapturedevice/flashmode
-
 @available(iOS 10.2, *)
 extension CameraViewController {
     
-    enum FlashModeCheck: Int {
-        case off = 0
-        case on
-        case auto
-        //열거형으로 상태 검증..
-    }
-    
-    func getFlashModeConstants(_ mode: Int) -> AVCaptureDevice.FlashMode {
-        // Objective-C 문법..애플 개발자 문서 상세 참조...
         
-        var valueOfFlashMode: AVCaptureDevice.FlashMode = .off
-        
-        
-        switch mode {
-        case FlashModeCheck.off.rawValue: valueOfFlashMode = .off
-        case FlashModeCheck.auto.rawValue: valueOfFlashMode = .auto
-        case FlashModeCheck.on.rawValue: valueOfFlashMode = .on
-        
-        default:
-            break;
+        enum FlashModeCheck: Int {
+            case off = 0
+            case on
+            case auto
+            //열거형으로 상태 검증..
         }
         
-        return valueOfFlashMode
-    }
+        
+        func getFlashModeConstants(_ mode: Int) -> AVCaptureDevice.FlashMode {
+            // Objective-C 문법..애플 개발자 문서 상세 참조...
+            
+            var valueOfFlashMode: AVCaptureDevice.FlashMode = .off
+            
+            
+            if #available(iOS 10.2, *) {
+                switch mode {
+                case FlashModeCheck.off.rawValue: valueOfFlashMode = .off
+                case FlashModeCheck.auto.rawValue: valueOfFlashMode = .auto
+                case FlashModeCheck.on.rawValue: valueOfFlashMode = .on
+                    
+                default:
+                    break;
+                }
+            } else {
+                // Fallback on earlier versions
+            }
+            return valueOfFlashMode
+        }
 }
-
-
 

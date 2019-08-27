@@ -32,18 +32,24 @@ class EditPhotoViewController: UIViewController {
     @IBOutlet weak var imagefilterCollectionView: UICollectionView!
     @IBOutlet weak var photogarghedImage: UIImageView!
     
-    var takenPhotoImage: UIImage?
-    var takenResizedPhotoImage: UIImage?
+    var takenPhotoImage: UIImage? //촬영 원본
+    var takenResizedPhotoImage: UIImage? //촬영 후 리사이즈된 이미지
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //swift 4에서 문법 변경으로 뒤에 캐스팅
         imagefilterCollectionView.delegate = self as UICollectionViewDelegate
         imagefilterCollectionView.dataSource = self as UICollectionViewDataSource
         photogarghedImage.image = takenPhotoImage
 
-        // Do any additional setup after loading the view.
+        photogarghedImage.isUserInteractionEnabled = true
+        //Tap Gesture 설정. 기본값이 false
+        
+        let photographedImageGestureRecogninzer:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggledImage))
+        photogarghedImage.addGestureRecognizer(photographedImageGestureRecogninzer)
+        
     }
     
     
@@ -67,6 +73,10 @@ class EditPhotoViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("viewDidDisappear in EditPhotoViewController")
+    }
+    
+    func toggledImage(sender: UITapGestureRecognizer) {
+        print("1")
     }
 
     /*
