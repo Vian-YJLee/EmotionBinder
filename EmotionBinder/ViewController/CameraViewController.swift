@@ -55,11 +55,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     
     var captureSession: AVCaptureSession?
     // 비디오 장치로부터 데이터 출력의 흐름 조정하는 AVCaptureSession 객체
-    var sessionOutput = AVCapturePhotoOutput()
+    var sessionOutput: AVCapturePhotoOutput?
     // 스틸 이미지(사진)와 관련해 최신 캡쳐 인터페이스 워크 플로우를 제공하는 AVCaptureOutput의 하위클래스. 카메라 화질, 저장방식, Flash 사용 유무 여부 등을 제어함
     var previewLayer = AVCaptureVideoPreviewLayer() // CALayer의 서브클래스. 입력장치로부터 캡쳐된 비디오를 표시하는데 사용
     //developer.apple.com의 AVFoundation 문서 참조
-    var captureSetting = AVCapturePhotoSettings()
+    var captureSetting: AVCapturePhotoSettings?
     //이미지 촬영(캡쳐)시 사용될 동작(플래시 발광 등)과 사진 저장에 필요한 각종 이미지 데이터(저장할 이미지 해상도, 화질 등등) 셋팅값들을 제어하는 클래스
     
  
@@ -98,9 +98,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
          var sessionOutput = AVCapturePhotoOutput()
          // 스틸 이미지(사진)와 관련해 최신 캡쳐 인터페이스 워크 플로우를 제공하는 AVCaptureOutput의 하위클래스. 카메라 화질, 저장방식, Flash 사용 유무 여부 등을 제어함
          var previewLayer = AVCaptureVideoPreviewLayer() // CALayer의 서브클래스. 입력장치로부터 캡쳐된 비디오를 표시하는데 사용
-         
-    
-       
                     */
         print("viewWillAppear in CameraViewController")
         
@@ -112,10 +109,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             switch authorizationStatusOfCamera {
             case .authorized:
                 print(authorizationStatusOfCamera)
-                setUpCamera()
+                setUpcamera()
                 
             case .denied:
                 print(authorizationStatusOfCamera)
+                
                 showNotice(alertCase: .Camera) // 접근 권한이 없으므로 사용자에게 설정 - 앱 - 카메라 허가 요청 UIAlertController 호출
                 
                 disableCameraOptionButton() // flash, camera rotate swich 버튼 비활성화
@@ -128,7 +126,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
                         
                         // GCD
                         DispatchQueue.main.async {
-                            self.setUpCamera() // 카메라 셋업
+                            self.setUpcamera() // 카메라 셋업
                         }
                         
                     } else {
@@ -149,7 +147,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
         }
     }
         
-                
+    
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -183,7 +181,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
                     if let photoCaptureSetting = self.captureSetting, let capturePhotoOutput = self.sessionOutput {
                         
                         photoCaptureSetting.flashMode = self.getFlashModeConstants(self.flashSwitchStatus)
-                        photoCaptureSetting.isAutoStillImageStabilaizationEnabled = true
+                        photoCaptureSetting.isAutoStillImageStabilizationEnabled = true
                         photoCaptureSetting.isHighResolutionPhotoEnabled = false
                         
                         capturePhotoOutput.capturePhoto(with: photoCaptureSetting, delegate: self)
@@ -299,7 +297,57 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     }
     
     
-    func setup
+    func setUpcamera() {
+        
+        cameraSwichBarbuttonItem.isEnabled = true
+        flashSetBarbButtonItem.isEnabled = true
+        
+        captureSession = AVCaptureSession()
+        sessionOutput = AVCapturePhotoOutput()
+        previewLayer = AVCaptureVideoPreviewLayer()
+        
+        if let session = captureSession {
+            session.sessionPreset = AVCaptureSession.Preset.hd1920x1080
+            
+            let deviceSession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInDuoCamera, AVCaptureDevice.DeviceType.builtInTelephotoCamera, AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
+            
+            if let session = captureSession { //카메라 front, back 상태를 저장하는 프로퍼티
+                for discoveredDevice in (deviceSession.devices) {
+                    
+                    if discoveredDevice.position == AVCaptureDevice.Position.back {
+                        do {
+                            let input = try AVCaptureDeviceInput(device: discoveredDevice)
+                            if session.canAddInput(input) {
+                                session.addInput(input)
+                                
+                                if session.canAddOutput(sessionOutput!) {
+                                    session.addOutput(sessionOutput!)
+                                    
+                                    previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession!)
+                                
+                                    let captureVideoPreveiwLayer = previewLayer
+                                        
+                                        captureVideoPreveiwLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                                        captureVideoPreveiwLayer.connection?.videoOrientation = .portrait
+                                    
+                                    cameraView.layer.addSublayer(previewLayer)
+                                    
+                                    captureVideoPreveiwLayer.position = CGPoint(x: self.cameraView.frame.width / 2, y: self.cameraView.frame.height / 2)
+                                    
+                                        captureVideoPreveiwLayer.frame = cameraView.bounds
+                                    
+                                    session.startRunning()
+                                    
+                                    }
+                                }
+                        }  catch let avCaptureError {
+                            print(avCaptureError)
+                    }
+                    }
+                }
+            }
+        }
+    }
     
     // Find a camera with the specified AVCaptureDevicePosition, returning nil if one is not found
     @available(iOS 10.2, *)
@@ -317,7 +365,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
         
         // AVCapturePhotoCaptureDelegate Method for Image Saving
         
-        func photoOutput(_: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer PhotoSampleBuffer: CMSampleBuffer?, previewPhtoSampleBuffer: CMSampleBuffer?, resolvedsettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCapturePhotoBracketSettings?, error: Error?) {
+        func capture(_: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer PhotoSampleBuffer: CMSampleBuffer?, previewPhtoSampleBuffer: CMSampleBuffer?, resolvedsettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCapturePhotoBracketSettings?, error: Error?) {
             
             if let photoSampleBuffer = PhotoSampleBuffer {
                 let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: PhotoSampleBuffer!, previewPhotoSampleBuffer: previewPhtoSampleBuffer)
@@ -325,18 +373,29 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
                 
                 
                 if let image = takedPhotoImage {
-                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                    
+                    switch PHPhotoLibrary.authorizationStatus() {
+                    case .authorized:
+                        //설정 - 사진승인 상태이기에 앨범에 저장, 이동
+                        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted), nil)
+                    case .denied, .notDetermined:
+                        // 설정 - 미승인 상태. 앨범에 저장하지 않고 다음 화면으로 바로 이동
+                        
+                        navigateToFilterViewControllerWithResizeImage(Source: image)
+                        
+                    default:
+                        return
+                       
+                    }
                 }
             }
-            
-            
         }
         
-        
+        // UIImageWriteToSavedPhotosAlbum 수행 후 completionSelector 수행
         func saveCompleted(_ image: UIImage, didFinishSaveingWithError error: Error?, contextInfo: UnsafeMutableRawPointer) {
             dump(image)
             
-            navigateToFilterViewControllerWithResizeImage(source: image)
+            navigateToFilterViewControllerWithResizeImage(Source: image)
         }
         
         func navigateToFilterViewControllerWithResizeImage(Source image: UIImage) {
