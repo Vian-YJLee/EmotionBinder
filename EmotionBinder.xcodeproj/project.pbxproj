@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01C570B3EC5D8D70A2278D32 /* Pods_EmotionBinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBB56AB0BD8079854B12EF0 /* Pods_EmotionBinder.framework */; };
+		4C179B3623544D9800826CE0 /* UITapGestureRecognizerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C179B3523544D9800826CE0 /* UITapGestureRecognizerExtension.swift */; };
 		4C3AD2B2230B911A0052C177 /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3AD2B1230B911A0052C177 /* FilterCollectionViewCell.swift */; };
 		4C3AD2B4230BE5300052C177 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3AD2B3230BE5300052C177 /* ImageExtension.swift */; };
 		4C3AD2B6230FA5430052C177 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3AD2B5230FA5430052C177 /* Constants.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		0F9F4115B39A74BDCB84CD5D /* Pods-EmotionBinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmotionBinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder.debug.xcconfig"; sourceTree = "<group>"; };
+		4C179B3523544D9800826CE0 /* UITapGestureRecognizerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizerExtension.swift; sourceTree = "<group>"; };
 		4C3AD2B1230B911A0052C177 /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C3AD2B3230BE5300052C177 /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		4C3AD2B5230FA5430052C177 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			children = (
 				4C3AD2B1230B911A0052C177 /* FilterCollectionViewCell.swift */,
 				4C3AD2B3230BE5300052C177 /* ImageExtension.swift */,
+				4C179B3523544D9800826CE0 /* UITapGestureRecognizerExtension.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				4CA2693F22A6664B00C143F2 /* AppDelegate.swift in Sources */,
 				4C60661D22E84E4700A913A6 /* HomeTabBarController.swift in Sources */,
 				4C3AD2B2230B911A0052C177 /* FilterCollectionViewCell.swift in Sources */,
+				4C179B3623544D9800826CE0 /* UITapGestureRecognizerExtension.swift in Sources */,
 				4C3AD2B4230BE5300052C177 /* ImageExtension.swift in Sources */,
 				4C3AD2B6230FA5430052C177 /* Constants.swift in Sources */,
 			);

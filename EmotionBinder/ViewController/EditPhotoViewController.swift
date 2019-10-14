@@ -7,42 +7,28 @@
 //
 
 import UIKit
+import Photos
 
 class EditPhotoViewController: UIViewController {
     
-    let cameraFilterCollectionViewCellIdentifier: String = "FilterCell"
     
-    struct PhotoEditorTypes {
-        
-        static let titles: [String?] = ["Filter"]
-        static let rowTitles: [[String?]?] = [["Normal", "Mono", "Tonal", "Noir", "chrome", "Process", "Transfer", "Instant"]]
-        
-        static func RowNumbers(of select: Int) -> Int {
-            
-            
-            return rowTitles[Section]?.count ?? 0
-            
-        }
-        
-        static func titleForIndexPath(_ indexPath: IndexPath) -> String? {
-            return rowTitles[indexPath.section]?[indexPath.row]
-        }
-        
-    }
     @IBOutlet weak var imagefilterCollectionView: UICollectionView!
     @IBOutlet weak var photogarghedImage: UIImageView!
     
     var takenPhotoImage: UIImage? //촬영 원본
     var takenResizedPhotoImage: UIImage? //촬영 후 리사이즈된 이미지
-    
+    var imageTapStatus: Bool? //이미지 선택(탭) 상태 확인 프로퍼티
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //swift 4에서 문법 변경으로 뒤에 캐스팅
+        //UICollectionViewDlelgate, UICollectionViewDatasource setting
         imagefilterCollectionView.delegate = self as UICollectionViewDelegate
         imagefilterCollectionView.dataSource = self as UICollectionViewDataSource
         photogarghedImage.image = takenPhotoImage
+        
+        imageTapStatus = false // 이미지 선택되지 않은 상태로 초기값 셋팅
 
         photogarghedImage.isUserInteractionEnabled = true
         //Tap Gesture 설정. 기본값이 false
@@ -75,7 +61,7 @@ class EditPhotoViewController: UIViewController {
         print("viewDidDisappear in EditPhotoViewController")
     }
     
-    func toggledImage(sender: UITapGestureRecognizer) {
+    @objc func toggledImage(sender: UITapGestureRecognizer) {
         print("1")
     }
 
@@ -96,6 +82,26 @@ class EditPhotoViewController: UIViewController {
 
 extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
+    fileprivate static let cameraFilterCollectionViewCellIdentifier: String = "FilterCell"
+    
+    struct PhotoEditorTypes {
+        
+        static let titles: [String?] = ["Filter"]
+        static let rowTitles: [[String?]?] = [["Normal", "Mono", "Tonal", "Noir", "chrome", "Process", "Transfer", "Instant"]]
+        
+        static func RowNumbers(of select: Int) -> Int {
+            
+            
+            return rowTitles[section]?.count ?? 0
+            
+        }
+        
+        static func titleForIndexPath(_ indexPath: IndexPath) -> String? {
+            return rowTitles[indexPath.section]?[indexPath.row]
+        }
+        
+    }
+    
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("numberOfItemInSection")
@@ -105,7 +111,7 @@ extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cameraFilterCollectionViewCellIdentifier, for: indexPath) as! FilterCollectionViewController
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditPhotoViewController.cameraFilterCollectionViewCellIdentifier, for: indexPath) as! FilterCollectionViewCell
         
     }
     
@@ -120,7 +126,7 @@ extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let selectedCell = UICollectionViewCell.cellForItem(at: indexPath) as? FilterCollectionViewCell { selectedCell.isSelected =  true}
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? FilterCollectionViewCell { selectedCell.isSelected =  true}
         
         //선택 셀 정렬(수평 중간)메소드
         self.imagefilterCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -128,11 +134,42 @@ extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewD
     
     //cell 선택 해제시 호출
     
-    private func collectionView(_ collectionView: UICollectionViewCell, didDeselectItemAt indexPath: IndexPath) {
+    internal func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         
-        if let deselectedCell = collectionViewCell.cellForItem(at: indexPath) as? FilterCollectionViewCell {
+        if let deselectedCell = collectionView.cellForItem(at: indexPath) as? FilterCollectionViewCell {
+            
             deselectedCell.isSelected = false
         }
     }
     
+}
+
+extension EditPhotoViewController {
+    
+    func imageForFullView(sender: UITapGestureRecognizer){
+        if let status = imageTapStatus {
+            
+            let tap = sender.tapStatus(status)
+            switch tap {
+            case true:
+                self.imageTapStatus = tap
+                changeUIToState(true)
+            case false:
+                self.imageTapStatus = tap
+                changeUIToState(false)
+            }
+        }
+    }
+    
+    func changeUIToState(_ tap: Bool){
+        
+        //NavigationBar와 하단의 CollectionView를 표시/숨김
+        if tap {
+            navigationController?.isNavigationBarHidden = true
+            imagefilterCollectionView.isHidden = true
+        } else {
+            navigationController?.isNavigationBarHidden = false
+            imagefilterCollectionView.isHidden = false
+        }
+    }
 }
