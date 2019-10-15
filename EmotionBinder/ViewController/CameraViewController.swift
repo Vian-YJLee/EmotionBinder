@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import Dispatch
+import Photos
 
 @available(iOS 10.2, *)
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -41,7 +42,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     var emojiFaceIcon: UIImageView?
     var isAddFunEmoticon: Bool?
     var originalImage: UIImage?
-    
     var filterTitle: String? //필터 이름 지정
     var filterIndex: Int? // 현재 필터를 저장해둘 인덱스 변수. 스와이프 기능으로 동작할 때 사용
     var cameraPosition: AVCaptureDevice.Position?
@@ -52,7 +52,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
     var authorizationStatus: AVAuthorizationStatus? // 카메라 실행 전 권한 묻기 : 개발 가이드 강제사항..안하면 리젝
     var previewImage: CGRect?
     
-    
+    var captureDevice: AVCaptureDevice? // 물리적 캡쳐 장치 및 해당 장치와 관련된 속성. 캡쳐 장치를 사용하여 기본 하드웨어 속성을 구성함. AVCaptrueSesstion 객체에 비디오 또는 오디오의 입력데이터 전달 역할
     var captureSession: AVCaptureSession?
     // 비디오 장치로부터 데이터 출력의 흐름 조정하는 AVCaptureSession 객체
     var sessionOutput: AVCapturePhotoOutput?
@@ -101,6 +101,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
                     */
         print("viewWillAppear in CameraViewController")
         
+        //카메라 사용여부 확인 (권한, 작동)
         let availavleCameraHardware:Bool = UIImagePickerController.isSourceTypeAvailable(.camera)
         shutterBarButtonItem.isEnabled = availavleCameraHardware
         authorizationStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
@@ -251,17 +252,19 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             session.removeInput(presentCameraInput)
             
             // Get new input
-            var newCameraInput:AVCaptureDevice! = nil
+            //var newCameraInput:AVCaptureDevice! = nil
+            
+            captureDevice = nil
             
             //이미지 사이즈 설정 참조 https://developer.apple.com/documentation/avfoundation/avcapturesession/preset
 
             if let input = presentCameraInput as? AVCaptureDeviceInput {
                 if(input.device.position == .back) {
-                    newCameraInput = cameraSwichingPosition(position: .front)
+                    captureDevice = cameraSwichingPosition(position: .front)
                     session.sessionPreset = AVCaptureSession.Preset.hd1920x1080
                 }else if(input.device.position == .front) {
                     
-                    newCameraInput = cameraSwichingPosition(position: .back)
+                    captureDevice = cameraSwichingPosition(position: .back)
                     session.sessionPreset = AVCaptureSession.Preset.hd1920x1080
                 
                 }
@@ -273,7 +276,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             var newVideoInput: AVCaptureDeviceInput!
             
             do {
-                newVideoInput = try AVCaptureDeviceInput(device: newCameraInput)
+                newVideoInput = try AVCaptureDeviceInput(device: captureDevice!)
             }catch let err1 as NSError {
                 err = err1
                 newVideoInput = nil
@@ -315,6 +318,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
                 for discoveredDevice in (deviceSession.devices) {
                     
                     if discoveredDevice.position == AVCaptureDevice.Position.back {
+                        captureDevice = discoveredDevice // Device setting
+                        
                         do {
                             let input = try AVCaptureDeviceInput(device: discoveredDevice)
                             if session.canAddInput(input) {
@@ -410,32 +415,64 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVCa
             }
         }
         
-        func showNotice(alertCase : settingType) {
-            
-            let alertController = UIAlertController(title: AlertContentConstants.titles[alertCase.rawValue], message: AlertContentConstants.message[alertCase.rawValue], preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: AlertContentConstants.setting, style: .default, handler: { (action: UIAlertAction) -> Void in
-                let settingUrl = URL(string: UIApplication.openSettingsURLString)
-                if #available(iOS 10.2, *) {
-                    UIApplication.shared.open(settingUrl!, options: [:], completionHandler: nil)
-                } else {
-                    UIApplication.shared.openURL(settingUrl!)
-                }
-            }))
-            
-            alertController.addAction(UIAlertAction(title: AlertContentConstants.cancel, style: .cancel, handler: nil))
-            
-            present(alertController, animated: true, completion: nil)
-            
-        }
+        
     
        
         
         
     }
+    
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if let focusingOn = touches.first, let device = captureDevice {
+            
+            if device.isFocusPointOfInterestSupported {
+                
+                let focusPoint = touchPercent(touch: focusingOn)
+                
+                do {
+                    try device.lockForConfiguration()
+                    
+                    device.focusPointOfInterest = focusPoint
+                    device.focusMode = .autoFocus
+                    device.exposurePointOfInterest = focusPoint
+                    device.exposureMode = AVCaptureDevice.ExposureMode.continuousAutoExposure
+                    device.unlockForConfiguration()
+                    
+                } catch {
+                    fatalError()
+                }
+            }
+        }
+    }
+    
+    // 화면 밝기
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
+    
+   func touchPercent(touch focusingOn: UITouch) -> CGPoint {
+        
+        //카메라 스케일(해상도)
+        
+        let cameraSize = cameraView.bounds.size
+        
+        // 0~1.0 으로 x, y 화면대비 비율 구하기
+        let x = focusingOn.location(in: cameraView).y / cameraSize.height
+        let y = 1.0 - focusingOn.location(in: cameraView).x / cameraSize.width
+        let ratioOfPoint = CGPoint(x: x, y: y)
+        
+        return ratioOfPoint
+    }
+    
+    
+    
 }
     //apple developer의 AVCaptureDevice.FlashMode문서를 참조해 extension추가 및 method 구현
     // https://developer.apple.com/documentation/avfoundation/avcapturedevice/flashmode
-    
+
+// MARK:- Flash Mode
     
 @available(iOS 10.2, *)
 extension CameraViewController {
@@ -469,5 +506,28 @@ extension CameraViewController {
             }
             return valueOfFlashMode
         }
+    
+    
+    
+    // MARK:- Change the Device's activeFormet property
+    
+    func showNotice(alertCase : settingType) {
+        
+        let alertController = UIAlertController(title: AlertContentConstants.titles[alertCase.rawValue], message: AlertContentConstants.message[alertCase.rawValue], preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: AlertContentConstants.setting, style: .default, handler: { (action: UIAlertAction) -> Void in
+            let settingUrl = URL(string: UIApplication.openSettingsURLString)
+            if #available(iOS 10.2, *) {
+                UIApplication.shared.open(settingUrl!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(settingUrl!)
+            }
+        }))
+        
+        alertController.addAction(UIAlertAction(title: AlertContentConstants.cancel, style: .cancel, handler: nil))
+        
+        present(alertController, animated: true, completion: nil)
+        
+    }
+    
 }
 
