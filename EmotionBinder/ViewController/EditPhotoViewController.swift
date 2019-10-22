@@ -26,9 +26,12 @@ class EditPhotoViewController: UIViewController {
         //UICollectionViewDlelgate, UICollectionViewDatasource setting
         imagefilterCollectionView.delegate = self as UICollectionViewDelegate
         imagefilterCollectionView.dataSource = self as UICollectionViewDataSource
+        
+        // 촬영된 이미지 set
         photogarghedImage.image = takenPhotoImage
         
-        imageTapStatus = false // 이미지 선택되지 않은 상태로 초기값 셋팅
+        // 이미지 선택되지 않은 상태로 초기값 셋팅
+        imageTapStatus = false
 
         photogarghedImage.isUserInteractionEnabled = true
         //Tap Gesture 설정. 기본값이 false
@@ -87,9 +90,12 @@ extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewD
     struct PhotoEditorTypes {
         
         static let titles: [String?] = ["Filter"]
-        static let rowTitles: [[String?]?] = [["Normal", "Mono", "Tonal", "Noir", "chrome", "Process", "Transfer", "Instant"]]
         
-        static func RowNumbers(of select: Int) -> Int {
+        //filter input
+        static let rowTitles: [[String?]?] = [["Normal", "CIPhotoEffectMono", "CIPhotoEffectTonal", "CIPhotoEffectNoir", "CIPhotoEffectFade", "CIPhotoEffectChrome", "CIPhotoEffectProcess", "CIPhotoEffectTransfer", "CIPhotoEffectTransfer"]]
+        static let rowTilteValues: [[String?]] = [["Normal","Mono", "Tonal", "Noir", "chrome", "Process", "Transfer", "Instant"]]
+        
+        static func RowNumbers(of section: Int) -> Int {
             
             
             return rowTitles[section]?.count ?? 0
@@ -113,6 +119,13 @@ extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewD
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditPhotoViewController.cameraFilterCollectionViewCellIdentifier, for: indexPath) as! FilterCollectionViewCell
         
+        cell.filtertitleLable.text = PhotoEditorTypes.rowTitles[indexPath.section]?[indexPath.row]
+        
+        if let filterTitle = PhotoEditorTypes.rowTitles[indexPath.section]?[indexPath.row] {
+            cell.filterImageView.image = takenResizedPhotoImage?.applyFilter(type: filterTitle)
+        
+        }
+        return cell
     }
     
     
@@ -126,7 +139,18 @@ extension EditPhotoViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let selectedCell = collectionView.cellForItem(at: indexPath) as? FilterCollectionViewCell { selectedCell.isSelected =  true}
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? FilterCollectionViewCell {
+            
+            selectedCell.isSelected =  true
+            
+            if let filterTitle = PhotoEditorTypes.rowTitles[indexPath.section]?[indexPath.row] {
+                
+                DispatchQueue.main.async {
+                    self.photogarghedImage.image = self.takenPhotoImage?.applyFilter(type: filterTitle)
+                }
+            }
+            
+        }
         
         //선택 셀 정렬(수평 중간)메소드
         self.imagefilterCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
