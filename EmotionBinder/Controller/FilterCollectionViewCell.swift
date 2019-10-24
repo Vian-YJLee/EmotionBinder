@@ -11,19 +11,18 @@ import UIKit
 class FilterCollectionViewCell: UICollectionViewCell {
     
     
-    
-    
-    @IBOutlet weak var filterTitle: UILabel!
+    @IBOutlet weak var filterTitleLabel: UILabel!
     @IBOutlet weak var filterMaskingImage: UIImageView!
     
     override func awakeFromNib() {
-        
-        filterTitle.textColor = self.isSelected ? UIColor.black : UIColor.gray
+        super.awakeFromNib()
+        filterTitleLabel.textColor = self.isSelected ? UIColor.black : UIColor.gray
         
     }
     
     override var isSelected: Bool {
-        
+       
+        /*
         get {
             return super.isSelected
         }
@@ -35,7 +34,10 @@ class FilterCollectionViewCell: UICollectionViewCell {
                 super.isSelected = false
                 self.filterTitle.textColor = UIColor.gray
             }
+                    */
+        didSet {
+            //if로 하는 것이 컴파일 속도는 더 빠르지만.. 토글방식 변경
+            self.filterTitleLabel.textColor = isSelected ? UIColor.black : UIColor.gray
         }
     }
-    
 }

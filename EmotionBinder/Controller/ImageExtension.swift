@@ -55,19 +55,21 @@ extension UIImage {
             fatalError("error")
         }
         
-        let openGLContext = EAGLContext(api: openGLES3)
+        let openGLContext = EAGLContext(api: .openGLES3)
         let context =  CIContext(eaglContext: openGLContext!)
         
         let ciImage = CIImage(cgImage: image)
-        let filter = CIFilter(name: filterName)
-        filter?.setDefaults()
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
         
-        if let output = filter?.value(forKey: kCIOutputImageKey) as? CIImage {
+        if let filter = CIFilter(name: filterName) {
+        filter.setDefaults()
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        
+            if let output = filter.value(forKey: kCIOutputImageKey) as? CIImage {
             
             resultImage = UIImage(cgImage: context.createCGImage(output, from: output.extent)!, scale: scale, orientation: originalOrientation)
-        }
+            }
         
+        }
         return resultImage
     }
 }
