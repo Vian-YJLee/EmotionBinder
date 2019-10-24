@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		4C60661D22E84E4700A913A6 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */; };
 		4C60662F22F2C5C300A913A6 /* FlashAuto.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C60662E22F2C5C300A913A6 /* FlashAuto.png */; };
 		4C60663122F807E500A913A6 /* EditPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60663022F807E500A913A6 /* EditPhotoViewController.swift */; };
+		4C636BCE236186A000D4ABD8 /* CameraViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C636BCD2361869F00D4ABD8 /* CameraViewControllerExtension.swift */; };
 		4CA2693F22A6664B00C143F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2693E22A6664B00C143F2 /* AppDelegate.swift */; };
 		4CA2694622A6664B00C143F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CA2694422A6664B00C143F2 /* Main.storyboard */; };
 		4CA2694822A6664D00C143F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CA2694722A6664D00C143F2 /* Assets.xcassets */; };
@@ -58,6 +59,7 @@
 		4C60662D22F0365600A913A6 /* FlashOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FlashOn.png; sourceTree = "<group>"; };
 		4C60662E22F2C5C300A913A6 /* FlashAuto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FlashAuto.png; path = ../../../../Downloads/FlashAuto.png; sourceTree = "<group>"; };
 		4C60663022F807E500A913A6 /* EditPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoViewController.swift; sourceTree = "<group>"; };
+		4C636BCD2361869F00D4ABD8 /* CameraViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewControllerExtension.swift; sourceTree = "<group>"; };
 		4CA2693B22A6664B00C143F2 /* EmotionBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmotionBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA2693E22A6664B00C143F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CA2694522A6664B00C143F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				4CA2697622A674A100C143F2 /* SettingTableViewController.swift */,
 				4C60661C22E84E4700A913A6 /* HomeTabBarController.swift */,
 				4C60663022F807E500A913A6 /* EditPhotoViewController.swift */,
+				4C636BCD2361869F00D4ABD8 /* CameraViewControllerExtension.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -368,30 +371,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${PODS_ROOT}/naveridlogin-sdk-ios/NaverThirdPartyLogin.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NaverThirdPartyLogin.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EmotionBinder/Pods-EmotionBinder-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -402,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CA2697722A674A100C143F2 /* SettingTableViewController.swift in Sources */,
+				4C636BCE236186A000D4ABD8 /* CameraViewControllerExtension.swift in Sources */,
 				4C60663122F807E500A913A6 /* EditPhotoViewController.swift in Sources */,
 				4C60661B22E6DB5800A913A6 /* CameraViewController.swift in Sources */,
 				4CA2697522A6743A00C143F2 /* NewsFeedTableViewController.swift in Sources */,
